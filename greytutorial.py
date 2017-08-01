@@ -6,6 +6,7 @@
 #import urllib
 
 import numpy as np
+
 import tensorflow as tf
 
 
@@ -14,7 +15,8 @@ from  os import environ
 #os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
-#from .
+#taken from https://agray3.github.io/2016/11/29/Demystifying-Data-Input-to-TensorFlow-for-Deep-Learning.html
+#also copy the file getImage.py
 import getImage
 
 
@@ -55,7 +57,7 @@ imageBatch, labelBatch = tf.train.shuffle_batch(
     [image, label], batch_size=100,
     capacity=2000,
     min_after_dequeue=1000)
-    
+
 
 # and similarly for the validation data
 vimageBatch, vlabelBatch = tf.train.shuffle_batch(

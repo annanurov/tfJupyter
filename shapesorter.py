@@ -107,7 +107,7 @@ y_ = tf.placeholder(tf.float32, [None, nClass])
 if simpleModel:
   # run simple model y=Wx+b given in TensorFlow "MNIST" tutorial
 
-  print "Running Simple Model y=Wx+b"
+  print ("Running Simple Model y=Wx+b\n")###python 3 !!!!
 
   # initialise weights and biases to zero
   # W maps input to output so is of size: (number of pixels) * (Number of Classes)
@@ -140,7 +140,7 @@ else:
     return tf.nn.max_pool(x, ksize=[1, 2, 2, 1],
                           strides=[1, 2, 2, 1], padding='SAME')
 
-  print "Running Convolutional Neural Network Model"
+  print ("Running Convolutional Neural Network Model\n") #### python 3!!!!!
   nFeatures1=32
   nFeatures2=64
   nNeuronsfc=1024
@@ -181,14 +181,14 @@ else:
 
   # check our dimensions are a multiple of 4
   if (width%4 or height%4):
-    print "Error: width and height must be a multiple of 4"
+    print ("Error: width and height must be a multiple of 4\n") ### python 3!!!
     sys.exit(1)
 
-  W_fc1 = weight_variable([(width/4) * (height/4) * nFeatures2, nNeuronsfc])
+  W_fc1 = weight_variable([ int((width/4) * (height/4) * nFeatures2), nNeuronsfc])
   b_fc1 = bias_variable([nNeuronsfc])
 
   # flatten output from previous layer
-  h_pool2_flat = tf.reshape(h_pool2, [-1, (width/4) * (height/4) * nFeatures2])
+  h_pool2_flat = tf.reshape(h_pool2, [-1, int((width/4) * (height/4) * nFeatures2)])
   h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
 
   # reduce overfitting by applying dropout
@@ -231,7 +231,7 @@ threads = tf.train.start_queue_runners(sess=sess,coord=coord)
 
 # start training
 print ("# start training\n")
-nSteps=10000
+nSteps=400
 for i in range(nSteps):
 
     batch_xs, batch_ys = sess.run([imageBatch, labelBatch])
@@ -244,7 +244,7 @@ for i in range(nSteps):
 
 
     if (i+1)%100 == 0: # then perform validation
-      print ("iteration: " + str(i) + ":\t")
+      #print ("iteration: " + str(i) + ":\t")
       # get a validation batch
       vbatch_xs, vbatch_ys = sess.run([vimageBatch, vlabelBatch])
       if simpleModel:
@@ -253,7 +253,7 @@ for i in range(nSteps):
       else:
         train_accuracy = accuracy.eval(feed_dict={
           x:vbatch_xs, y_: vbatch_ys, keep_prob: 1.0})
-      print("step %d, training accuracy %g"%(i+1, train_accuracy))
+      print("step %d, training accuracy %g\n"%(i+1, train_accuracy))
 
 
 # finalise
